@@ -1,58 +1,25 @@
 {
   "targets": [
     {
-      "target_name": "encryption_addon",
-      "sources": ["binding.cpp"],
+      "target_name": "binding",
+      "sources": [ 
+        "src/encryption.cpp",
+        "src/utils.cpp"
+      ],
       "include_dirs": [
-        "<!(node -e \"require('node-addon-api').include\")"
+        "<!(node -p \"require('node-addon-api').include\")",
+        "/usr/local/opt/openssl/include",
+        "/usr/local/include"
       ],
-      "dependencies": [
-        "<!(node -e \"require('node-addon-api').gyp\")"
+      "libraries": [
+        "-L/usr/local/opt/openssl/lib",
+        "-lcrypto",
+        "-lssl",
+        "-lsodium"
       ],
-      "libraries": [],
-      "cflags!": ["-fno-exceptions"],
-      "cflags_cc!": ["-fno-exceptions"],
-      "conditions": [
-        ["OS=='mac'", {
-          "xcode_settings": {
-            "OTHER_LDFLAGS": [
-              "-framework Security",
-              "-framework CoreFoundation",
-              "-lcrypto"
-            ],
-            "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
-            "CLANG_CXX_LANGUAGE_STANDARD": "gnu++14",
-            "MACOSX_DEPLOYMENT_TARGET": "10.7"
-          }
-        }],
-        ["OS=='linux'", {
-          "libraries": ["-lcrypto"],
-          "ldflags": ["-lcrypto"],
-          "cflags_cc": ["-std=c++14"]
-        }],
-        ["OS=='win'", {
-          "libraries": [
-            "-llibcrypto"
-          ],
-          "msvs_settings": {
-            "VCCLCompilerTool": {
-              "ExceptionHandling": "1"
-            }
-          },
-          "conditions": [
-            ['target_arch=="ia32"', {
-              "libraries": [
-                "-llibcryptoMD"
-              ]
-            }],
-            ['target_arch=="x64"', {
-              "libraries": [
-                "-llibcryptoMT"
-              ]
-            }]
-          ]
-        }]
-      ]
+      "defines": [ "NAPI_VERSION=6" ],
+      "cflags!": [ "-fno-exceptions" ],
+      "cflags_cc!": [ "-fno-exceptions" ]
     }
   ]
 }
