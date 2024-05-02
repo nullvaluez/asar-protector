@@ -1,6 +1,6 @@
 # asar-protector
 
-This Node.js script enhances the security of ASAR archives using encryption, bloating, checksum embedding, and optional honeytoken embedding. It utilizes native bindings through `ffi-napi` and cryptographic functions to secure the archives against tampering and unauthorized access.
+This Node.js script enhances the security of ASAR archives using encryption, bloating, checksum embedding, and optional honeytoken embedding. It utilizes native bindings through `ffi-napi` and cryptographic functions to secure the archives against tampering and unauthorized access. Inspiration behind this was created because of ElectronJS bundling issues with exposing full source code for any production state applications.
 
 ## Dependencies
 
